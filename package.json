@@ -1,0 +1,19 @@
+{
+  "name": "text-to-speech",
+  "version": "1.0.0",
+  "description": "This dapp extracts text from an image and convert it to speech",
+  "main": "iexec.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zied-Guesmi/text-to-speech-dapp.git"
+  },
+  "author": {
+    "name": "Zied Guesmi"
+  },
+  "license": "GPLv2",
+  "homepage": "https://github.com/Zied-Guesmi/text-to-speech-dapp.git",
+  "logo": "logo.svg",
+  "dependencies": {
+    "iexec-oracle-contract": "1.1.7"
+  }
+}
