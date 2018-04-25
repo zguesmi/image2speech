@@ -4,28 +4,35 @@
 
 
 ## Description
-This dapp applies [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech  
-Image ---(tesseract)---> Text ---(pyttsx)---> sound
+This dapp applies [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech.  
+IMAGE ---tesseract---> TEXT ---pyttsx---> SOUND
 
 ## Usage
     # Help
     $ python3 app.py -h
 
     # Extract text without converting it to speech
-    $ python3 app.py -i path/to/image -o text
+    $ python3 app.py -i path/to/image -o text -l eng
 
     # Extract text and convert it to speech
-    $ python3 app.py -i path/to/image -o speech
+    $ python3 app.py -i path/to/image -o speech -l eng
 
-    # Extract frensh text and convert it to speech
-    $ python3 app.py -i path/to/image -o speech -l fra
+    # Change speech voice
+    $ python3 app.py -i path/to/image -o speech -l fra -v moira
 
 ## Supported languages
-English - eng (default)  
-Frensh - fra  
-Arabic - ara  
-
-To change the language use the -l (--language) option
+#### English
+Symbol: eng
+Voices: daniel (default), alex, karen, moira.
+#### Spanish
+Symbol: esp
+Voices: jorge (default), paulina.
+#### Arabic
+Symbol: ara
+Voices: maged (default).
+#### Frensh
+Symbol: fra
+Voices: thomas (default), amelie.
 
 ## Dependencies
 python3  
@@ -49,7 +56,7 @@ Install system dependencies:
         python3-pip \
         python3-dev
 
-Install python depedencies
+Install python depedencies:
 
     $ cd app
     $ pip3 install -r requirements.txt
