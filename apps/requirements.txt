@@ -1,0 +1,6 @@
+pytesseract
+opencv-python
+pyttsx3
+pillow
+# to fix an issue
+pyobjc

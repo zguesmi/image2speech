@@ -1,17 +1,17 @@
 {
-  "name": "text-to-speech",
+  "name": "image-to-speech-dapp",
   "version": "1.0.0",
-  "description": "This dapp extracts text from an image and convert it to speech",
+  "description": "This dapp applies tesseract-OCR on images to extract text and convert it to speech",
   "main": "iexec.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zied-Guesmi/text-to-speech-dapp.git"
+    "url": "git+https://github.com/Zied-Guesmi/image-to-speech-dapp.git"
   },
   "author": {
     "name": "Zied Guesmi"
   },
-  "license": "GPLv2",
-  "homepage": "https://github.com/Zied-Guesmi/text-to-speech-dapp.git",
+  "license": "",
+  "homepage": "https://github.com/Zied-Guesmi/image-to-speech-dapp",
   "logo": "logo.svg",
   "dependencies": {
     "iexec-oracle-contract": "1.1.7"

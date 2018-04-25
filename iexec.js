@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Text-to-speech',
+  name: 'image-to-speech-dapp',
   app: {
     type: 'DOCKER',
     envvars: 'XWDOCKERIMAGE=docker-image-name',
