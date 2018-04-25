@@ -4,7 +4,7 @@
 
 
 ## Description
-This dapp applies ![tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech  
+This dapp applies [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech  
 Image ---(tesseract)---> Text ---(pyttsx)---> sound
 
 ## Usage
@@ -28,13 +28,13 @@ Arabic - ara
 To change the language use the -l (--language) option
 
 ## Dependencies
-    python3
-    ![tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
-    ![pyttsx3](https://pypi.org/project/pyttsx3/2.5/)
-    ![opencv](https://opencv.org/)
+python3
+[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
+[pyttsx3](https://pypi.org/project/pyttsx3/2.5/)
+[opencv](https://opencv.org/)
 
 ## Docker installation
-For easier installation check ![this](./docker)
+For easier installation check [this](./docker)
 
 ## Native installation
 Install system dependencies:
