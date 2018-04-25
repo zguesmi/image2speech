@@ -1,10 +1,10 @@
 # Image-to-speech-Dapp
 
-![dapp logo](./logo.)
+![dapp logo](./logo.svg)
 
 
 ## Description
-This dapp applies [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech
+This dapp applies ![tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech  
 Image ---(tesseract)---> Text ---(pyttsx)---> sound
 
 ## Usage
@@ -21,19 +21,22 @@ Image ---(tesseract)---> Text ---(pyttsx)---> sound
     $ python3 app.py -i path/to/image -o speech -l fra
 
 ## Supported languages
-English - eng (default)
-Frensh - fra
-Arabic - ara
+English - eng (default)  
+Frensh - fra  
+Arabic - ara  
 
 To change the language use the -l (--language) option
 
 ## Dependencies
     python3
-    [tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
-    [pyttsx3](https://pypi.org/project/pyttsx3/2.5/)
-    [opencv](https://opencv.org/)
+    ![tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
+    ![pyttsx3](https://pypi.org/project/pyttsx3/2.5/)
+    ![opencv](https://opencv.org/)
 
-## installation
+## Docker installation
+For easier installation check ![this](./docker)
+
+## Native installation
 Install system dependencies:
 
     $ apt-get update && apt-get install -y \
@@ -44,8 +47,8 @@ Install system dependencies:
         tesseract-ocr-fra \
         python3 \
         python3-pip \
-        python3-dev \
+        python3-dev
 
 Install python depedencies
 
-    $ pip3 install -r requirements.py
+    $ pip3 install -r requirements.txt
