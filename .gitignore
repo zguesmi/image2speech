@@ -28,7 +28,7 @@ node_modules
 .node_repl_history
 
 # Python virtualenv
-apps/ENV
+app/ENV
 
 # images
-apps/images
+app/images

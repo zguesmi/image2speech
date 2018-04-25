@@ -28,9 +28,9 @@ Arabic - ara
 To change the language use the -l (--language) option
 
 ## Dependencies
-python3
-[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
-[pyttsx3](https://pypi.org/project/pyttsx3/2.5/)
+python3  
+[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)  
+[pyttsx3](https://pypi.org/project/pyttsx3/2.5/)  
 [opencv](https://opencv.org/)
 
 ## Docker installation
@@ -51,4 +51,5 @@ Install system dependencies:
 
 Install python depedencies
 
+    $ cd app
     $ pip3 install -r requirements.txt
