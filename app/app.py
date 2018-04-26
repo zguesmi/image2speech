@@ -2,126 +2,121 @@ import argparse
 import cv2
 import os
 import sys
+import subprocess
 from PIL import Image
 import pytesseract
-import pyttsx3
 
 
-ENG_VOICES = {
-    'default': 'com.apple.speech.synthesis.voice.daniel.premium',
-    'daniel': 'com.apple.speech.synthesis.voice.daniel.premium',
-    'alex': 'com.apple.speech.synthesis.voice.Alex',
-    'karen': 'com.apple.speech.synthesis.voice.karen',
-    'moira': 'com.apple.speech.synthesis.voice.moira'
-}
 
-ESP_VOICES = {
-    'default': 'com.apple.speech.synthesis.voice.jorge',
-    'jorge': 'com.apple.speech.synthesis.voice.jorge',
-    'paulina': 'com.apple.speech.synthesis.voice.paulina'
-}
+class OCR:
 
-ARA_VOICES = {
-    'default': 'com.apple.speech.synthesis.voice.maged',
-    'maged': 'com.apple.speech.synthesis.voice.maged'
-}
+    def preprocess(self, image, method):
+        ''' load image with opencv, convert it to grayscale and apply preprocessing '''
+        
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-FRA_VOICES = {
-    'default': 'com.apple.speech.synthesis.voice.thomas',
-    'thomas': 'com.apple.speech.synthesis.voice.thomas',
-    'amelie': 'com.apple.speech.synthesis.voice.amelie'
-}
+        if method == 'thresh':
+            return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
-LANGUAGES = {
-    'eng': ENG_VOICES,
-    'esp': ESP_VOICES,
-    'ara': ARA_VOICES,
-    'fra': FRA_VOICES
-}
+        if method == 'blur':
+            return cv2.medianBlur(image, 3)
 
-def parseArgs():
+    def imageToString(self, image, lang):
+        ''' load image as PIL and return extracted text '''
+        try:
+            return pytesseract.image_to_string(image, lang=lang)
+        except Exception as e:
+            sys.exit(e)
 
-    argParser = argparse.ArgumentParser()
-    argParser.add_argument('-i', '--image', required=True, help='Path to input image', type=str)
-    argParser.add_argument('-o', '--output', required=True, help='Output format', type=str,
-        choices=['text', 'speech'])
-    argParser.add_argument('-l', '--language', required=True, help='Text\'s language', type=str,
-        choices=['eng', 'esp', 'ara', 'fra'])
-    argParser.add_argument('-v', '--voice', required=False, help='Voice id', type=str,
-        choices=['daniel', 'alex', 'karen', 'moira', 'jorge', 'paulina', 'maged', 'thomas', 'amelie'], default='default')
-    argParser.add_argument('-p', '--preprocess', required=False, help='Type of preprocessing', type=str,
-        choices=['thresh', 'blur'], default='thresh')
+
+class Speech:
     
-    return vars(argParser.parse_args())
+    ENG_VOICES = {
+        'default': 'daniel.premium',
+        'daniel': 'daniel.premium',
+        'alex': 'Alex',
+        'karen': 'karen',
+        'moira': 'moira'
+    }
 
+    ESP_VOICES = {
+        'default': 'jorge',
+        'jorge': 'jorge',
+        'paulina': 'paulina'
+    }
 
-def preprocess(image, preprocessMethod):
-    ''' load image with opencv, convert it to grayscale and apply preprocessing '''
+    ARA_VOICES = {
+        'default': 'maged',
+        'maged': 'maged'
+    }
+
+    FRA_VOICES = {
+        'default': 'thomas',
+        'thomas': 'thomas',
+        'amelie': 'amelie'
+    }
     
-    img = cv2.cvtColor(cv2.imread(image), cv2.COLOR_BGR2GRAY)
-
-    if preprocessMethod == 'thresh':
-        return cv2.threshold(img, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-
-    if preprocessMethod == 'blur':
-        return cv2.medianBlur(img, 3)
-
-
-def saveTempFile(image):
-    '''' write the grayscale image to disk as a temporary file '''
-    filename = "{}.png".format(os.getpid())
-    try:
-        cv2.imwrite(filename, image)
-        return filename
-    except Exception as e:
-        sys.exit(e)
+    LANGUAGES = {
+        'eng': ENG_VOICES,
+        'esp': ESP_VOICES,
+        'ara': ARA_VOICES,
+        'fra': FRA_VOICES
+    }
 
 
-def imageToString(filename, lang):
-    ''' load image as PIL and return extracted text '''
-    try:
-        return pytesseract.image_to_string(Image.open(filename), lang=lang)
-    except Exception as e:
-        sys.exit(e)
-
-
-def matchLanguageVoice(lang, voice):
-    if not voice in LANGUAGES[lang]: voice = 'default'
-    return LANGUAGES[lang][voice]
-
-
-def textToSpeech(text, voiceId):
-    ''' convert text to speech '''
-    engine = pyttsx3.init()
-    engine.setProperty('rate', 200)
-    engine.setProperty('voice', voiceId)
-    engine.say(text)
-    engine.runAndWait()
-
-    # TODO save the file and return it
-
-    return 'tts'
-
-
-def main():
-
-    args = parseArgs()
-
-    if not os.path.isfile(args['image']): sys.exit('No such file or directory: {}'.format(args['image']))
+    def matchLanguageVoice(self, lang, voice):
+        BASE_VOICE_URI = 'com.apple.speech.synthesis.voice.'
+        if not voice in self.LANGUAGES[lang]: voice = 'default'
+        return BASE_VOICE_URI + self.LANGUAGES[lang][voice]
     
-    image = preprocess(args['image'], args['preprocess'])
-    filename = saveTempFile(image)
-    text = imageToString(filename, args['language'])
-    print(text)
+    def textToSpeech(self, text):
+        subprocess.call(["espeak", "-w", "speech", text])
 
-    try:
-        os.remove(filename)
-    except Exception as e:
-        print('Warning: couldn\'t remove temporary file {}'.format(filename))
 
-    if args['output'] == 'text': return text
-    if args['output'] == 'speech': return textToSpeech(text, matchLanguageVoice(args['language'], args['voice']))
+class App:
 
+    # args
+    # text
+
+    def __init__(self):
+        self.parseArgs()
+        if not os.path.isfile(self.args['image']): sys.exit('No such file or directory: {}'.format(self.args['image']))
+        self.image = cv2.imread(self.args['image'])
+
+    def parseArgs(self):
+
+        argParser = argparse.ArgumentParser()
+        argParser.add_argument('-i', '--image', required=True, help='Path to input image', type=str)
+        argParser.add_argument('-o', '--output', required=True, help='Output format', type=str,
+            choices=['text', 'speech'])
+        argParser.add_argument('-l', '--language', required=True, help='Text\'s language', type=str,
+            choices=['eng', 'esp', 'ara', 'fra'])
+        argParser.add_argument('-v', '--voice', required=False, help='Voice id', type=str,
+            choices=['daniel', 'alex', 'karen', 'moira', 'jorge', 'paulina', 'maged', 'thomas', 'amelie'], default='default')
+        argParser.add_argument('-p', '--preprocess', required=False, help='Type of preprocessing', type=str,
+            choices=['thresh', 'blur'], default='thresh')
+        
+        self.args = vars(argParser.parse_args())
+
+    def extractText(self):
+        ocr = OCR()
+        self.image = ocr.preprocess(image=self.image, method=self.args['preprocess'])
+        self.text = ocr.imageToString(self.image, self.args['language'])
+
+    def main(self):
+        
+        self.extractText()
+
+        print(self.text.encode('utf-8').strip())
+        print('*******************')
+
+        if self.args['output'] == 'text': return self.text
+
+        if self.args['output'] == 'speech':
+            speech = Speech()
+            # voiceId = speech.matchLanguageVoice(self.args['language'], self.args['voice'])
+            speech.textToSpeech(self.text)
+    
 
 if __name__ == '__main__':
-    main()
+    App().main()

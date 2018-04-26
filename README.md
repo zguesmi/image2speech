@@ -5,7 +5,6 @@
 
 ## Description
 This dapp applies [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech.  
-IMAGE ---tesseract---> TEXT ---pyttsx---> SOUND
 
 ## Usage
     # Help
@@ -22,16 +21,16 @@ IMAGE ---tesseract---> TEXT ---pyttsx---> SOUND
 
 ## Supported languages
 #### English
-Symbol: eng
+Symbol: eng  
 Voices: daniel (default), alex, karen, moira.
 #### Spanish
-Symbol: esp
+Symbol: esp  
 Voices: jorge (default), paulina.
 #### Arabic
-Symbol: ara
+Symbol: ara  
 Voices: maged (default).
 #### Frensh
-Symbol: fra
+Symbol: fra  
 Voices: thomas (default), amelie.
 
 ## Dependencies
@@ -49,13 +48,13 @@ Install system dependencies:
     $ apt-get update && apt-get install -y \
         tesseract-ocr \
         libtesseract-dev \
-        tesseract-ocr-eng \
         tesseract-ocr-ara \
+        tesseract-ocr-eng \
         tesseract-ocr-fra \
+        tesseract-ocr-spa \
         python3 \
-        python3-pip \
-        python3-dev
-
+        python3-pip
+        
 Install python depedencies:
 
     $ cd app
