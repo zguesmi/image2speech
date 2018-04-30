@@ -1,1 +1,0 @@
-python3 app.py -i images/1.png -o text -l eng

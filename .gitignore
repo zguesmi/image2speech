@@ -30,5 +30,11 @@ node_modules
 # Python virtualenv
 app/ENV
 
-# images
+# local files
 app/images
+app/out.txt
+app/out.mp3
+
+# my scripts
+app/docker_run.sh
+app/run.sh
