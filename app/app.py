@@ -11,18 +11,18 @@ except ImportError:
 class OCR:
 
     LANGUAGES = {
-        'en': 'eng',    # english
-        'fr': 'fra',    # frensh
-        'es': 'spa',    # Spanish
-        'ar': 'ara',    # arabic
-        'de': 'deu',    # German
-        'zh': 'chi_sim', # chinese
-        'it': 'ita',    # Italian
-        'ja': 'jpn',    # Japanese 
-        'pt': 'por',    # Portuguese
-        'ru': 'rus',    # russian
-        'tr': 'tur',    # turkish
-        'ko': 'kor'     # Korean
+        'en': 'eng',        # english
+        'fr': 'fra',        # frensh
+        'es': 'spa',        # Spanish
+        'ar': 'ara',        # arabic
+        'de': 'deu',        # German
+        'zh': 'chi-sim',    # chinese
+        'it': 'ita',        # Italian
+        'ja': 'jpn',        # Japanese 
+        'pt': 'por',        # Portuguese
+        'ru': 'rus',        # russian
+        'tr': 'tur',        # turkish
+        'ko': 'kor'         # Korean
     }
 
     def _preprocess(self, image, method):

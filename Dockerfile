@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
         tesseract-ocr-fra \
         tesseract-ocr-spa \
         tesseract-ocr-deu \
-        tesseract-ocr-chi_sim \
+        tesseract-ocr-chi-sim \
         tesseract-ocr-ita \
         tesseract-ocr-jpn \
         tesseract-ocr-por \
