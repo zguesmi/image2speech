@@ -1,10 +1,10 @@
 module.exports = {
-  name: 'image-to-speech',
+  name: 'image2speech',
   app: {
     type: 'DOCKER',
-    envvars: 'XWDOCKERIMAGE=docker-image-name',
+    envvars: 'XWDOCKERIMAGE=ziedguesmi/image2speech',
   },
   work: {
-    cmdline: 'cli arguments',
+    cmdline: '',
   }
 };
