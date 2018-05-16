@@ -35,6 +35,10 @@ app/images
 app/out.txt
 app/out.mp3
 
-# my scripts
-app/docker_run.sh
-app/run.sh
+.DS_Store
+__pycache__
+datadir.sh
+DATADIR
+DATADIR.old
+wallet.json
+account.json

@@ -1,61 +1,149 @@
-# Image-to-speech-Dapp
-
-![dapp logo](./logo.svg)
+![logo](./logo.png)
 
 
 ## Description
-This dapp applies [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) on images to extract text and convert it to speech.  
+
+image2speech is an Ethereum ready dapp that applies google's [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) engine to extract text from images. So whether you are creating a billing app or converting images to searchable pdfs, image2speech is the right tool. text2speech uses also [mimic](https://github.com/MycroftAI/mimic) text-to-speech engine to convert text to speech and save them in wav format.  
+
+![demo](./images/demo.png)
+
 
 ## Usage
-    # Help
-    $ python3 app.py -h
 
-    # Extract text without converting it to speech
-    $ python3 app.py -i path/to/image -o text -l eng
+Bring your images together in a folder (exp: DATADIR) and add an ```input-config.yml``` file in the same folder. This file contains configuration for each image it should respect the following format:
 
-    # Extract text and convert it to speech
-    $ python3 app.py -i path/to/image -o speech -l eng
+    <imagename 1>:
+        language: <lang>
+        voice: <voice name>
+        latency: <value>
 
-    # Change speech voice
-    $ python3 app.py -i path/to/image -o speech -l fra -v moira
+    <imagename 2>:
+        language: <lang>
+        voice: <voice name>
+        latency: <value>
+
+You can keep the language's section empty but this may affect the performance of the extraction process. If voice name and latency are not defined the app will default to "ap" voice and 1.0 latency.
+
+![screenshot](./images/screenshot-1.png)
+
+In the ```app/app-config.yml``` file, change the datadir parameter to the path of your folder (DATADIR for our example) and run the script.
+
+    $ git clone https://github.com/Zied-Guesmi/image2speech.git && cd image2speech/
+    $ sed -i "s/\/iexec/<path/to/datadir/folder>/" app/app-config.yml
+    $ python3 app/src/app.py
+
+You shoud find your text/sound files in the ```DATADIR/out/``` folder.
+
+![screenshot](./images/screenshot-2.png)
+
 
 ## Supported languages
-#### English
-Symbol: eng  
-Voices: daniel (default), alex, karen, moira.
-#### Spanish
-Symbol: esp  
-Voices: jorge (default), paulina.
-#### Arabic
-Symbol: ara  
-Voices: maged (default).
-#### Frensh
-Symbol: fra  
-Voices: thomas (default), amelie.
+
+English (for now).
+
+
+## Supported image types
+
+Tested extensions: **jpeg**, **bmp**, **png**  
+Those extensions are accepted but were not tested yet: **pbm**, **pgm**, **ppm**, **tiff**, **rast**, **xbm**  
+
+
+## Voices
+
+**Male**: ap, awb_time, awb, kal, kal16, rms.  
+**Female**: slt_hts, slt.  
+See voice samples [here](https://github.com/Zied-Guesmi/image2speech/tree/master/voice-samples).
+
 
 ## Dependencies
-python3  
-[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)  
-[pyttsx3](https://pypi.org/project/pyttsx3/2.5/)  
-[opencv](https://opencv.org/)
 
-## Docker installation
-For easier installation check [this](./docker)
+- [python3](https://www.python.org/)  
+- [tesseract-ocr](https://github.com/tesseract-ocr/tesseract)  
+- [opencv](https://opencv.org/)
+- [mimic](https://github.com/MycroftAI/mimic) tts engine
 
-## Native installation
+
+## Docker deployment
+
+After installing [docker](https://docs.docker.com/install/) and preparing your DATADIR folder, just grab the docker image from dockerhub and run it:
+
+    $ docker run -v abs/path/to/datadir:/iexec/ ziedguesmi/image2speech
+
+Or you can build your own image from dockerfile:
+
+    # clone the dapp
+    $ git clone https://github.com/Zied-Guesmi/image2speech.git && cd image2speech/ 
+
+    # build the docker image
+    $ docker build -t image2speech .
+
+    # run the container
+    $ docker run -v abs/path/to/datadir:/iexec/ image2speech
+
+
+## Installation
+
 Install system dependencies:
 
+    # ubuntu as an example
     $ apt-get update && apt-get install -y \
-        tesseract-ocr \
+        automake \
+        gcc \
+        git \
+        libasound2-dev \
+        libsm6 \
         libtesseract-dev \
+        libtool \
+        make \
+        pkg-config \
+        python3 \
+        python3-pip \
+        tesseract-ocr \
         tesseract-ocr-ara \
         tesseract-ocr-eng \
         tesseract-ocr-fra \
         tesseract-ocr-spa \
-        python3 \
-        python3-pip
-        
+        tesseract-ocr-deu \
+        tesseract-ocr-chi-sim \
+        tesseract-ocr-ita \
+        tesseract-ocr-jpn \
+        tesseract-ocr-por \
+        tesseract-ocr-rus \
+        tesseract-ocr-tur \
+        tesseract-ocr-kor \
+        unzip \
+        wget
+
+Install mimic tts engine
+
+    $ git clone https://github.com/MycroftAI/mimic.git && cd mimic
+    $ ./dependencies.sh --prefix="/usr/local"
+    $ ./autogen.sh
+    $ ./configure --prefix="/usr/local"
+    $ make
+
+
+Clone the app:
+
+    $ git clone https://github.com/Zied-Guesmi/image2speech.git && cd image2speech/
+
 Install python depedencies:
 
-    $ cd app
-    $ pip3 install -r requirements.txt
+    $ pip3 install -r app/requirements.txt
+
+
+## TODO
+
+- Support more languages.
+- Add more mimic voices.
+- Reduce mimic docker image size.
+
+
+## Authors
+
+- **[Zied Guesmi](https://github.com/Zied-Guesmi)**
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Zied-Guesmi/text2speech/blob/master/LICENSE) file for details
