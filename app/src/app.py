@@ -37,8 +37,13 @@ class App:
 
 
     @property
-    def out(self):
-        return self._paths['/out']
+    def textDir(self):
+        return self._paths['/text']
+
+
+    @property
+    def soundDir(self):
+        return self._paths['/sound']
 
 
     def readAppConfigFile(self):
@@ -55,6 +60,8 @@ class App:
             self._paths['/'] = yml['datadir']
             self._paths['/in'] = '{}/{}'.format(yml['datadir'], yml['input-dir'])
             self._paths['/out'] = '{}/{}'.format(yml['datadir'], yml['output-dir'])
+            self._paths['/text'] = '{}/{}'.format(self._paths['/out'], self._TEXT_DIR)
+            self._paths['/sound'] = '{}/{}'.format(self._paths['/out'], self._SOUND_DIR)
             self._paths['conf'] = '{}/{}'.format(yml['datadir'], yml['input-config'])
 
             self.flag.executionEnded = self.flag.executionEnded.format(yml['input-dir'], yml['output-dir'])
@@ -91,9 +98,11 @@ class App:
     def prepareDatadir(self):
 
         try:
-            datadirContent = os.listdir(self._paths['/'])
             os.mkdir(self._paths['/in'])
             os.mkdir(self._paths['/out'])
+            os.mkdir(self._paths['/text'])
+            os.mkdir(self._paths['/sound'])
+            datadirContent = os.listdir(self._paths['/'])
 
             for filename in [ f for f in datadirContent if self.isSupportedImageType(f) ]:
                 subprocess.call([ 'mv', self.getAbsPath('/', filename), self._paths['/in'] ])
@@ -141,14 +150,10 @@ class App:
 
                 text = OCR().imageToString(path=imagePath, lang=params['language'])
 
-                textDirPath = self.getAbsPath('/out', self._TEXT_DIR)
-                textFilePath = '{}/{}{}'.format(textDirPath, imageName, self._TEXT_EXTENSION)
-
+                textFilePath = self.getAbsPath('/text', imageName, self._TEXT_EXTENSION)
                 self.save(path=textFilePath, text=text)
 
-                soundDirPath = self.getAbsPath('/out', self._SOUND_DIR)
-                soundFilePath = '{}/{}{}'.format(soundDirPath, imageName, self._SOUND_EXTENSION)
-
+                soundFilePath = self.getAbsPath('/sound', imageName, self._SOUND_EXTENSION)
                 TTS().textToSpeech(
                     path=textFilePath,
                     voice=params['voice'],
@@ -171,4 +176,4 @@ class App:
 if __name__ == '__main__':
     app = App()
     app.main()
-    Consensus(datadir=app.datadir, outputdir=app.out)
+    Consensus(datadir=app.datadir, textDir=app.textDir, soundDir=app.soundDir)

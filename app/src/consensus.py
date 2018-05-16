@@ -12,20 +12,24 @@ class Consensus:
     _CONSENSUS_FILENAME = 'consensus.iexec'
 
 
-    def __init__(self, datadir, outputdir):
+    def __init__(self, datadir, textDir, soundDir):
 
         path = '{}/{}'.format(datadir, self._CONSENSUS_FILENAME)
-        self.create(consensusFilePath=path, outputdir=outputdir)
+        self.create(consensusFilePath=path, textDir=textDir, soundDir=soundDir)
 
 
-    def create(self, consensusFilePath, outputdir):
+    def create(self, consensusFilePath, textDir, soundDir):
 
         try:
             consensus = open(consensusFilePath, 'w+')
 
-            for filename in os.listdir(outputdir):
+            for filename in os.listdir(textDir):
+                path = '{}/{}'.format(textDir, filename)
+                filehash = self.hashFile(path)
+                consensus.write('{}\n'.format(filehash))
 
-                path = '{}/{}'.format(outputdir, filename)
+            for filename in os.listdir(soundDir):
+                path = '{}/{}'.format(soundDir, filename)
                 filehash = self.hashFile(path)
                 consensus.write('{}\n'.format(filehash))
 

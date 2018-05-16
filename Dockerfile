@@ -1,11 +1,12 @@
-FROM ubuntu:16.04
+FROM ziedguesmi/mimic-tts:latest
 
 LABEL maintainer="Zied Guesmi <guesmy.zied@gmail.com>"
 
 RUN apt-get update && apt-get install -y \
-        # libsm6 \
         libtesseract-dev \
-        # libxext6 \
+        libsm6 \
+        python3 \
+        python3-pip \
         tesseract-ocr \
         tesseract-ocr-ara \
         tesseract-ocr-eng \
@@ -19,20 +20,16 @@ RUN apt-get update && apt-get install -y \
         tesseract-ocr-rus \
         tesseract-ocr-tur \
         tesseract-ocr-kor \
-        python3 \
-        python3-pip \
-        # python3-dev \     
-        # libgtk2.0-bin \
-        # libsm6 \
-        # libxext6 \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY ./app/ /app/
+RUN mkdir /iexec
 
-WORKDIR /app
+COPY ./app /image2speech
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r /image2speech/requirements.txt
 
-ENTRYPOINT ['python3', 'app.py']
+WORKDIR /mimic
+
+ENTRYPOINT [ "/image2speech/docker-start" ]
