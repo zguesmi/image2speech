@@ -1,0 +1,12 @@
+
+### DON'T add trailing slashes in dir names
+
+# your images folder absolute/relative path (to the src/app.py script)
+datadir: /iexec
+
+
+# If you're not sure do not edit this section, it's used by the app
+
+input-config: input-config.yml    # contains image names and configuration
+input-dir: in                     # this directory contains input files
+output-dir: out                   # output directory name

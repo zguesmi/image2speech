@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python3 /image2speech/src/app.py

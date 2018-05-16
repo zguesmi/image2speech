@@ -1,4 +1,5 @@
 pytesseract
 opencv-python
 pillow
-gtts
+PyYAML
+yamlordereddictloader
