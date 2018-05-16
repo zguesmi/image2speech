@@ -3,7 +3,7 @@
 
 ## Description
 
-image2speech is an Ethereum ready dapp that applies google's [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) engine to extract text from images. So whether you are creating a billing app or converting images to searchable pdfs, image2speech is the right tool. text2speech uses also [mimic](https://github.com/MycroftAI/mimic) text-to-speech engine to convert text to speech and save them in wav format.  
+image2speech is an Ethereum ready dapp that applies google's [tesseract-OCR](https://github.com/tesseract-ocr/tesseract) engine to extract text from images. So whether you are creating a billing app or converting images to searchable pdfs, image2speech is your tool. text2speech uses also [mimic](https://github.com/MycroftAI/mimic) tts engine to convert text to speech and save them in wav format.  
 
 ![demo](./images/demo.png)
 
