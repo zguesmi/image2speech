@@ -144,4 +144,4 @@ Install python depedencies:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/Zied-Guesmi/text2speech/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Zied-Guesmi/image2speech/blob/master/LICENSE) file for details

@@ -14,10 +14,10 @@ from tts import TTS
 
 class Flag:
 
-    taskStarted = '-> processing file {}'
-    taskEnded = 'done..'
-    executionEnded = 'Supported images have been moved to "{}" folder. Text/sound files are saved in "{}" folder.'
-
+    taskStarted = '[INFO] processing file {}'
+    taskEnded = '[INFO] done..\n'
+    executionEnded = '[INFO] Text files have been moved to "{}" folder.\n' \
+                   + '[INFO] Sound files are saved in "{}" folder.'
 
 class App:
 
