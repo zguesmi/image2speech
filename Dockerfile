@@ -1,8 +1,11 @@
 FROM ziedguesmi/mimic-tts:latest
 
 LABEL maintainer="Zied Guesmi <guesmy.zied@gmail.com>"
+LABEL version="1.0"
 
-RUN apt-get update && apt-get install -y \
+COPY requirements.txt /image2speech/requirements.txt
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
         libtesseract-dev \
         libsm6 \
         python3 \
@@ -21,15 +24,17 @@ RUN apt-get update && apt-get install -y \
         tesseract-ocr-tur \
         tesseract-ocr-kor \
         && \
+    pip3 install -r /image2speech/requirements.txt  --no-cache-dir && \
+    rm /image2speech/requirements.txt && \
+    apt-get remove -y python3-pip && \
+    apt-get autoremove -y && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir /iexec
 
 COPY ./app /image2speech
 
-RUN pip3 install -r /image2speech/requirements.txt
-
 WORKDIR /mimic
 
-ENTRYPOINT [ "/image2speech/docker-start" ]
+ENTRYPOINT [ "/image2speech/entrypoint" ]
